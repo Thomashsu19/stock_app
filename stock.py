@@ -6,7 +6,6 @@ import os
 class StockApp:
     def __init__(self):
         # 授權並打開 Google Sheet
-        load_dotenv()
         self.gc = pygsheets.authorize(service_file='credentials.json')
         self.sht = self.gc.open_by_url('https://docs.google.com/spreadsheets/d/1YF-NVd2znu1k8YwVTXbR2CCVCX4hKQGZWzn2XnVQSNs/edit?gid=0#gid=0')
         self.wks = self.sht[0]  # 取第一個工作表
