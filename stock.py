@@ -1,19 +1,17 @@
 import pygsheets
 import requests
 import json
-
+from dotenv import load_dotenv
+import os
 class StockApp:
     def __init__(self):
         # 授權並打開 Google Sheet
+        load_dotenv()
         self.gc = pygsheets.authorize(service_file='credentials.json')
         self.sht = self.gc.open_by_url('https://docs.google.com/spreadsheets/d/1YF-NVd2znu1k8YwVTXbR2CCVCX4hKQGZWzn2XnVQSNs/edit?gid=0#gid=0')
         self.wks = self.sht[0]  # 取第一個工作表
         self.wks2 = self.sht[1]  # 取第二個工作表
-        # 從 config.json 載入 API key
-        with open('api_key.json', 'r') as f:
-            config = json.load(f)
-        self.finn_hub_api_key = config['finn_hub_api_key']
-        
+        self.finn_hub_api_key = os.getenv("FINN_HUB_API_KEY")
 
     def add_stock_record(self, date, stock_code, purchase_price, quantity):
         # 準備要新增的列資料

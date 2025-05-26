@@ -5,14 +5,16 @@ from linebot.models import MessageEvent, TextMessage, TextSendMessage
 from stock import StockApp
 from datetime import datetime
 import json
+from dotenv import load_dotenv
+import os
 
 class LineBotApp:
     def __init__(self):
         self.app = Flask(__name__)
-        with open('/Users/thomaskami/stock_app/api_key.json', 'r') as f:
-            keys = json.load(f)
-            channel_access_token = keys['channel_access_token']
-            channel_secret = keys['channel_secret']
+        load_dotenv()
+
+        channel_access_token = os.getenv("CHANNEL_ACCESS_TOKEN")
+        channel_secret = os.getenv("CHANNEL_SECRET")
         self.line_bot_api = LineBotApi(channel_access_token)
         self.handler = WebhookHandler(channel_secret)
         self.user_states = {}
