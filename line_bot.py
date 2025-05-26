@@ -15,12 +15,11 @@ class LineBotApp:
             channel_secret = keys['channel_secret']
         self.line_bot_api = LineBotApi(channel_access_token)
         self.handler = WebhookHandler(channel_secret)
-        self.user_states = {}  # 儲存 user_id 對應的狀態
-        self.user_data = {}    # 儲存 user_id 對應輸入的資料（例如日期）
+        self.user_states = {}
+        self.user_data = {}
 
         self.stock = StockApp()
         self._setup_routes()
-        self.run()
         
 
     def _setup_routes(self):
@@ -113,6 +112,6 @@ class LineBotApp:
         TextSendMessage(text="請輸入購買資訊，先股價再股數（例如：20250625,AAPL,30,20）")
         )
 
-    def run(self, port=5000):
-        self.app.run(port=port)
+    def run(self, port=8080):
+        self.app.run(host="0.0.0.0", port=10000)
 
